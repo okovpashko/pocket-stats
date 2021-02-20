@@ -3,7 +3,7 @@ module.exports =  function redirectUnauthenticated(req, res, next) {
   const {pocketAccessToken} = req.cookies;
 
   if (!pocketAccessToken) {
-    return res.redirect('/pocket/auth');
+    return res.redirect('/auth');
   }
 
   next();

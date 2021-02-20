@@ -7,15 +7,15 @@ const ACCESS_TOKEN_COOKIE = 'pocketAccessToken';
 
 const {APP_URL, POCKET_CONSUMER_KEY} = process.env;
 
-function createPocketRouter() {
+function createAuthRouter() {
   const router = express.Router();
 
   const pocketAuth = new PocketAuth({
     consumerKey: POCKET_CONSUMER_KEY,
-    redirectUrl: `${APP_URL}/pocket/auth/callback`
+    redirectUrl: `${APP_URL}/auth/callback`
   });
 
-  router.get('/auth/callback', async function(req, res, next) {
+  router.get('/callback', async function(req, res, next) {
     const requestToken = req.cookies[REQUEST_TOKEN_COOKIE];
 
     if (!requestToken) {
@@ -36,7 +36,7 @@ function createPocketRouter() {
       .redirect('/');
   });
 
-  router.get('/auth', async function(req, res, next) {
+  router.get('/', async function(req, res, next) {
     let authInitialOptions;
 
     try {
@@ -54,5 +54,5 @@ function createPocketRouter() {
   return router;
 }
 
-module.exports = createPocketRouter;
+module.exports = createAuthRouter;
 
