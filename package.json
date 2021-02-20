@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "build:assets": "NODE_ENV=production rollup -c",
-    "watch:assets": "rollup -c --watch"
+    "watch:assets": "rollup -c --watch",
+    "build": "npm run build:assets"
   },
   "dependencies": {
     "chart.js": "^2.9.4",
