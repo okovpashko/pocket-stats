@@ -33,7 +33,7 @@ function createPocketRouter() {
     return res
       .cookie(ACCESS_TOKEN_COOKIE, accessToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
       .clearCookie(REQUEST_TOKEN_COOKIE, {httpOnly: true})
-      .send('Success!');
+      .redirect('/');
   });
 
   router.get('/auth', async function(req, res, next) {
