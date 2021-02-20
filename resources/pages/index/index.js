@@ -17,7 +17,7 @@ const ctx = document.getElementById('chart').getContext('2d');
 
 const byMonth = new Map();
 
-data.forEach(article => {
+data.forEach((article) => {
   const dateAdded = new Date(article.time_added * 1000);
   const monthAddedFormatted = format(dateAdded, 'yyyy-MM');
 
@@ -31,20 +31,22 @@ data.forEach(article => {
 
 const countByMonth = [];
 
-for(let [month, articles] of byMonth.entries()) {
-  countByMonth.push({month, count: articles.size});
+for (let [month, articles] of byMonth.entries()) {
+  countByMonth.push({ month, count: articles.size });
 }
 
-countByMonth.sort((first, second ) => first.month > second.month ? 1 : -1);
+countByMonth.sort((first, second) => (first.month > second.month ? 1 : -1));
 
 const chart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: countByMonth.map(item => item.month),
-    datasets: [{
-      backgroundColor: 'rgb(54, 162, 235)',
-      label: 'Unread articles',
-      data: countByMonth.map(item => item.count),
-    }]
+    labels: countByMonth.map((item) => item.month),
+    datasets: [
+      {
+        backgroundColor: 'rgb(54, 162, 235)',
+        label: 'Unread articles',
+        data: countByMonth.map((item) => item.count),
+      },
+    ],
   },
 });

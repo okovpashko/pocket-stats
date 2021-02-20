@@ -4,11 +4,11 @@ const router = express.Router();
 
 const redirectUnauthenticated = require('../middleware/redurect-unauthenticated');
 
-const {POCKET_CONSUMER_KEY} = process.env;
+const { POCKET_CONSUMER_KEY } = process.env;
 
 /* GET home page. */
-router.get('/', redirectUnauthenticated, async function(req, res, next) {
-  const {pocketAccessToken} = req.cookies; // TODO: use constant with the cookie name
+router.get('/', redirectUnauthenticated, async function (req, res, next) {
+  const { pocketAccessToken } = req.cookies; // TODO: use constant with the cookie name
 
   const articlesApi = new PocketArticles({
     consumerKey: POCKET_CONSUMER_KEY,
@@ -19,7 +19,7 @@ router.get('/', redirectUnauthenticated, async function(req, res, next) {
 
   try {
     unreadArticles = await articlesApi.getUnread();
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
 

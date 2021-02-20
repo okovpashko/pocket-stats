@@ -3,7 +3,7 @@ const got = require('got');
 const POCKET_API_ROOT = 'https://getpocket.com/v3';
 
 class PocketArticles {
-  constructor({accessToken, consumerKey} = {}) {
+  constructor({ accessToken, consumerKey } = {}) {
     this.accessToken = accessToken;
     this.consumerKey = consumerKey;
   }
@@ -20,9 +20,9 @@ class PocketArticles {
       },
       responseType: 'json',
       headers: {
-        'Accept': '*/*',
+        Accept: '*/*',
         'X-Accept': 'application/json',
-      }
+      },
     });
 
     return response.body.list;

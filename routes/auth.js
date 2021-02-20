@@ -5,17 +5,17 @@ const PocketAuth = require('../services/pocket/pocket-auth');
 const REQUEST_TOKEN_COOKIE = 'requestToken';
 const ACCESS_TOKEN_COOKIE = 'pocketAccessToken';
 
-const {APP_URL, POCKET_CONSUMER_KEY} = process.env;
+const { APP_URL, POCKET_CONSUMER_KEY } = process.env;
 
 function createAuthRouter() {
   const router = express.Router();
 
   const pocketAuth = new PocketAuth({
     consumerKey: POCKET_CONSUMER_KEY,
-    redirectUrl: `${APP_URL}/auth/callback`
+    redirectUrl: `${APP_URL}/auth/callback`,
   });
 
-  router.get('/callback', async function(req, res, next) {
+  router.get('/callback', async function (req, res, next) {
     const requestToken = req.cookies[REQUEST_TOKEN_COOKIE];
 
     if (!requestToken) {
@@ -31,12 +31,15 @@ function createAuthRouter() {
     }
 
     return res
-      .cookie(ACCESS_TOKEN_COOKIE, accessToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
-      .clearCookie(REQUEST_TOKEN_COOKIE, {httpOnly: true})
+      .cookie(ACCESS_TOKEN_COOKIE, accessToken, {
+        httpOnly: true,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+      })
+      .clearCookie(REQUEST_TOKEN_COOKIE, { httpOnly: true })
       .redirect('/');
   });
 
-  router.get('/init', async function(req, res, next) {
+  router.get('/init', async function (req, res, next) {
     let authInitialOptions;
 
     try {
@@ -45,14 +48,14 @@ function createAuthRouter() {
       return next(error);
     }
 
-    const {authUrl, requestToken} = authInitialOptions;
+    const { authUrl, requestToken } = authInitialOptions;
 
     res
-      .cookie(REQUEST_TOKEN_COOKIE, requestToken, {httpOnly: true, maxAge: 5 * 60 * 1000})
+      .cookie(REQUEST_TOKEN_COOKIE, requestToken, { httpOnly: true, maxAge: 5 * 60 * 1000 })
       .redirect(authUrl);
   });
 
-  router.get('/', function(req, res) {
+  router.get('/', function (req, res) {
     return res.render('login', { loginUrl: '/auth/init' });
   });
 
@@ -60,4 +63,3 @@ function createAuthRouter() {
 }
 
 module.exports = createAuthRouter;
-

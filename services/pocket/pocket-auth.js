@@ -14,20 +14,20 @@ class PocketAuth {
       json: {
         consumer_key: this.consumerKey,
         redirect_uri: this.redirectUri,
-        state: 'mystate'
+        state: 'mystate',
       },
       responseType: 'json',
       headers: {
-        'Accept': '*/*',
+        Accept: '*/*',
         'X-Accept': 'application/json',
-      }
+      },
     });
 
     return response.body.code;
   }
 
   async getAuthInitialOptions() {
-    const requestToken = await this.getRequestToken()
+    const requestToken = await this.getRequestToken();
 
     const redirectUrl = new URL('/auth/authorize', POCKET_WEB_ROOT);
 
@@ -48,14 +48,13 @@ class PocketAuth {
       },
       responseType: 'json',
       headers: {
-        'Accept': '*/*',
+        Accept: '*/*',
         'X-Accept': 'application/json',
-      }
+      },
     });
 
     return response.body.access_token;
   }
 }
-
 
 module.exports = PocketAuth;

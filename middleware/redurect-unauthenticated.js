@@ -1,10 +1,10 @@
-module.exports =  function redirectUnauthenticated(req, res, next) {
+module.exports = function redirectUnauthenticated(req, res, next) {
   // TODO: constant for the token name
-  const {pocketAccessToken} = req.cookies;
+  const { pocketAccessToken } = req.cookies;
 
   if (!pocketAccessToken) {
     return res.redirect('/auth');
   }
 
   next();
-}
+};
