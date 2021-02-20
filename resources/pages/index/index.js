@@ -1,31 +1,25 @@
-// import * as Vue from 'vue';
-// import ReportsPage from '../../components/ReportsPage.vue';
-
-// const app = Vue.createApp(ReportsPage);
-//
-// app.mount('#vue-root');
-
-import format from 'date-fns/format';
+import moment from 'moment';
 import Chart from 'chart.js';
 
 import 'purecss/build/pure-min.css';
 import '../../main.css';
 
-const data = window.__articlesData;
+const articles = window.__articlesData;
 
 const ctx = document.getElementById('chart').getContext('2d');
 
 const byMonth = new Map();
 
-data.forEach((article) => {
-  const dateAdded = new Date(article.time_added * 1000);
-  const monthAddedFormatted = format(dateAdded, 'yyyy-MM');
+articles.forEach((article) => {
+  const monthAdded = moment(article.time_added * 1000)
+    .startOf('month')
+    .format('MMM YYYY');
 
-  if (byMonth.has(monthAddedFormatted)) {
-    byMonth.get(monthAddedFormatted).add(article);
+  if (byMonth.has(monthAdded)) {
+    byMonth.get(monthAdded).add(article);
   } else {
     const articlesSet = new Set([article]);
-    byMonth.set(monthAddedFormatted, articlesSet);
+    byMonth.set(monthAdded, articlesSet);
   }
 });
 
