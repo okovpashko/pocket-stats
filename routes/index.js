@@ -15,9 +15,15 @@ router.get('/', redirectUnauthenticated, async function(req, res, next) {
     accessToken: pocketAccessToken,
   });
 
-  const articles = Object.values(await articlesApi.getUnread());
+  let unreadArticles;
 
-  res.render('index', { title: 'Pocket stats', articles });
+  try {
+    unreadArticles = await articlesApi.getUnread();
+  } catch(error) {
+    next(error);
+  }
+
+  res.render('index', { title: 'Pocket stats', articles: Object.values(unreadArticles) });
 });
 
 module.exports = router;
