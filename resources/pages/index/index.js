@@ -11,15 +11,15 @@ const ctx = document.getElementById('chart').getContext('2d');
 const byMonth = new Map();
 
 articles.forEach((article) => {
-  const monthAdded = moment(article.time_added * 1000)
+  const dateAddedStartOfMonth = moment(article.time_added * 1000)
     .startOf('month')
-    .format('MMM YYYY');
+    .valueOf();
 
-  if (byMonth.has(monthAdded)) {
-    byMonth.get(monthAdded).add(article);
+  if (byMonth.has(dateAddedStartOfMonth)) {
+    byMonth.get(dateAddedStartOfMonth).add(article);
   } else {
     const articlesSet = new Set([article]);
-    byMonth.set(monthAdded, articlesSet);
+    byMonth.set(dateAddedStartOfMonth, articlesSet);
   }
 });
 
@@ -31,16 +31,34 @@ for (let [month, articles] of byMonth.entries()) {
 
 countByMonth.sort((first, second) => (first.month > second.month ? 1 : -1));
 
+const chartData = countByMonth.map((item) => ({
+  x: new Date(item.month),
+  y: item.count,
+}));
+
 const chart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: countByMonth.map((item) => item.month),
     datasets: [
       {
         backgroundColor: 'rgb(54, 162, 235)',
         label: 'Unread articles',
-        data: countByMonth.map((item) => item.count),
+        data: chartData,
       },
     ],
+  },
+  options: {
+    scales: {
+      xAxes: [
+        {
+          type: 'time',
+          offset: true,
+          time: {
+            unit: 'month',
+            tooltipFormat: 'MMM YYYY',
+          },
+        },
+      ],
+    },
   },
 });
