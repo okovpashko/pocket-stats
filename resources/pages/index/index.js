@@ -8,6 +8,9 @@
 import format from 'date-fns/format';
 import Chart from 'chart.js';
 
+import 'purecss/build/pure-min.css';
+import '../../main.css';
+
 const data = window.__articlesData;
 
 const ctx = document.getElementById('chart').getContext('2d');

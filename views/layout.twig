@@ -2,10 +2,12 @@
 <html>
   <head>
     <title>{{ title }}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/build/bundle.css' />
   </head>
   <body>
+    <main class="content">
     {% block body %}{% endblock %}
+    </main>
     {% block scripts %}{% endblock %}
   </body>
 </html>
