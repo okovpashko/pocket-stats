@@ -2,7 +2,7 @@ const express = require('express');
 const PocketArticles = require('../services/pocket/pocket-articles');
 const router = express.Router();
 
-const redirectUnauthenticated = require('../middleware/redurect-unauthenticated');
+const redirectUnauthenticated = require('../middleware/redirect-unauthenticated');
 
 const { POCKET_CONSUMER_KEY } = process.env;
 
