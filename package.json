@@ -7,7 +7,8 @@
     "build:assets": "NODE_ENV=production rollup -c",
     "watch:assets": "rollup -c --watch",
     "build": "npm run build:assets",
-    "format": "prettier --write \"**/*.js\""
+    "format": "prettier --write \"**/*.js\"",
+    "lint": "eslint ."
   },
   "dependencies": {
     "chart.js": "^2.9.4",
@@ -25,6 +26,9 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "prettier": "^2.2.1",
     "rollup": "^2.39.0",
     "rollup-plugin-css-only": "^3.1.0",
