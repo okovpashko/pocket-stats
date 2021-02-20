@@ -1,6 +1,16 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-  <h1>{{title}}</h1>
-  <p>Welcome to {{title}}</p>
+  <script>
+    window.__articlesData = JSON.parse('{{ articles|json_encode|e('js') }}');
+  </script>
+
+  <h1>Pocket stats</h1>
+
+  <div id="vue-root"></div>
+  <canvas id="chart" width="400" height="200"></canvas>
+{% endblock %}
+
+{% block scripts %}
+  <script src="/build/index.js"></script>
 {% endblock %}
