@@ -36,7 +36,7 @@ function createAuthRouter() {
       .redirect('/');
   });
 
-  router.get('/', async function(req, res, next) {
+  router.get('/init', async function(req, res, next) {
     let authInitialOptions;
 
     try {
@@ -47,8 +47,13 @@ function createAuthRouter() {
 
     const {authUrl, requestToken} = authInitialOptions;
 
-    res.cookie(REQUEST_TOKEN_COOKIE, requestToken, {httpOnly: true, maxAge: 5 * 60 * 1000})
+    res
+      .cookie(REQUEST_TOKEN_COOKIE, requestToken, {httpOnly: true, maxAge: 5 * 60 * 1000})
       .redirect(authUrl);
+  });
+
+  router.get('/', function(req, res) {
+    return res.render('login', { loginUrl: '/auth/init' });
   });
 
   return router;
