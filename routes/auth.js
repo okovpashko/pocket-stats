@@ -5,7 +5,8 @@ const PocketAuth = require('../services/pocket/pocket-auth');
 const REQUEST_TOKEN_COOKIE = 'requestToken';
 const ACCESS_TOKEN_COOKIE = 'pocketAccessToken';
 
-const { APP_URL, POCKET_CONSUMER_KEY } = process.env;
+const { APP_URL, POCKET_CONSUMER_KEY, NODE_ENV } = process.env;
+const isProductionMode = NODE_ENV === 'production';
 
 function createAuthRouter() {
   const router = express.Router();
@@ -32,10 +33,11 @@ function createAuthRouter() {
 
     return res
       .cookie(ACCESS_TOKEN_COOKIE, accessToken, {
-        httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: isProductionMode,
       })
-      .clearCookie(REQUEST_TOKEN_COOKIE, { httpOnly: true })
+      .clearCookie(REQUEST_TOKEN_COOKIE, { httpOnly: true, secure: isProductionMode })
       .redirect('/');
   });
 
@@ -51,7 +53,11 @@ function createAuthRouter() {
     const { authUrl, requestToken } = authInitialOptions;
 
     res
-      .cookie(REQUEST_TOKEN_COOKIE, requestToken, { httpOnly: true, maxAge: 5 * 60 * 1000 })
+      .cookie(REQUEST_TOKEN_COOKIE, requestToken, {
+        maxAge: 5 * 60 * 1000,
+        httpOnly: true,
+        secure: isProductionMode,
+      })
       .redirect(authUrl);
   });
 
