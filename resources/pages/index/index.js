@@ -59,6 +59,13 @@ const chart = new Chart(ctx, {
           },
         },
       ],
+      yAxes: [
+        {
+          ticks: {
+            suggestedMin: 0,
+          },
+        },
+      ],
     },
   },
 });
